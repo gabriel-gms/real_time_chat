@@ -1,19 +1,21 @@
 import express from "express"
 import path from "path"
 import http from "http"
-import socketIO from "socket.io"
+import { Server } from "socket.io"
 
 const app = express()
-const io = socketIO(server)
 
 app.use(express.static(path.join('public')))
 
 const server = http.createServer(app)
-server.listen(3000, ()=>{
+server.listen(5500, ()=>{
     console.log("running!!")
 })
 
-io.on('connection', (socket)=>{
-    console.log('alguem conectou');
-    
-})
+const io = new Server(server)
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+  });
+});
