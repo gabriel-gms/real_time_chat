@@ -15,7 +15,10 @@ server.listen(5500, ()=>{
 const io = new Server(server)
 
 io.on('connection', (socket) => {
+  console.log("alguem entrou no chat");
+  
   socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+    console.log(msg);
+    io.emit('show message', msg)
   });
 });
